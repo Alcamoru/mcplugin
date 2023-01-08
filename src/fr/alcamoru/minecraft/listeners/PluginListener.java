@@ -1,8 +1,8 @@
-package fr.alcamoru.minecraft;
+package fr.alcamoru.minecraft.listeners;
 
 import fr.alcamoru.minecraft.BedWars.BedWars;
-import fr.alcamoru.minecraft.BedWars.BedWarsListener;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
