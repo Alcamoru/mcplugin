@@ -1,6 +1,9 @@
 package fr.alcamoru.minecraft.listeners;
 
 import fr.alcamoru.minecraft.BedWars.BedWars;
+import fr.alcamoru.minecraft.BedWars.BedWarsTask;
+import fr.alcamoru.minecraft.Main;
+import fr.alcamoru.minecraft.States;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -21,6 +24,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Arrays;
 
 public class PluginListener implements Listener {
+
+    private Main main;
+
+    public PluginListener(Main main) {
+        this.main = main;
+    }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -77,6 +86,20 @@ public class PluginListener implements Listener {
             if (current.getType() == Material.WHITE_BED) {
                 BedWars.tpToLoc(player);
                 player.closeInventory();
+                if (!main.isState(States.WAITING)){
+                    player.setGameMode(GameMode.SPECTATOR);
+                }
+                else {
+                    if (!main.getPlayers().contains(player)) {
+                        main.getPlayers().add(player);
+                        if (main.getPlayers().size() > 0) {
+                            main.setState(States.STARTING);
+                            BedWarsTask start = new BedWarsTask(main);
+                            start.runTaskTimer(this.main, 0, 20);
+                        }
+                    }
+                }
+
             }
         }
     }
@@ -84,6 +107,7 @@ public class PluginListener implements Listener {
     public ItemStack getItem(Material material, String customDisplayName) {
         ItemStack item = new ItemStack(material);
         ItemMeta itemM = item.getItemMeta();
+        assert itemM != null;
         itemM.setDisplayName(customDisplayName);
         item.setItemMeta(itemM);
         return item;

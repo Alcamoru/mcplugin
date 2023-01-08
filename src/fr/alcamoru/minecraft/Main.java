@@ -25,8 +25,8 @@ public class Main extends JavaPlugin{
         getCommand("alert").setExecutor(new CommandTest());
         getCommand("spawn").setExecutor(new CommandSpawn());
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(new PluginListener(), this);
-        pm.registerEvents(new BedWarsListener(), this);
+        pm.registerEvents(new PluginListener(this), this);
+        pm.registerEvents(new BedWarsListener(this), this);
     }
 
     @Override

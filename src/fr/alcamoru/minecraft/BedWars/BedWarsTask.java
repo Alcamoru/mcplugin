@@ -22,12 +22,20 @@ public class BedWarsTask extends BukkitRunnable {
             player.setLevel(timer);
         }
 
-        if (timer == 0) {
-            Bukkit.broadcastMessage("Lancement...");
-            main.setState(States.PLAYING);
-            cancel();
+        if (timer == 10 || timer == 5 ||timer == 4 ||timer == 3 ||timer == 2 ||timer == 1) {
+            for (Player player: main.getPlayers()) {
+                player.sendTitle("§4" + timer, "", 5, 20, 5);
+            }
         }
 
+        if (timer == 0) {
+            Bukkit.broadcastMessage("Lancement...");
+            main.setState(States.WAITING);
+            for (Player player: main.getPlayers()) {
+                main.getPlayers().remove(player);
+            }
+            cancel();
+        }
         timer --;
     }
 }
